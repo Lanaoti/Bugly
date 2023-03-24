@@ -1,0 +1,8 @@
+{
+	"BuildId": "23058290",
+	"Modules": 
+	{
+		"Bugly": "UnrealEditor-Bugly.dll",
+		"BuglyEditor": "UnrealEditor-BuglyEditor.dll"
+	}
+}
