@@ -32,7 +32,11 @@ FString FGenericBuglyDelegate::OnCrashNotify()
 
 	if (GLog)
 	{
+	#if ENGINE_MAJOR_VERSION >=5 && ENGINE_MINOR_VERSION >= 3
+		GLog->FlushThreadedLogs();
+	#else
 		GLog->PanicFlushThreadedLogs();
+	#endif
 	}
 
 	FOutputDevice* LogDevice = FGenericPlatformOutputDevices::GetLog();
