@@ -1,8 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BuglyBlueprintLibrary.h"
-
 #include "BuglyModule.h"
+
+void UBuglyBlueprintLibrary::Startup()
+{
+	FString BuglyAppId;
+
+#if PLATFORM_ANDROID
+	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("AndroidAppID"), BuglyAppId, GGameIni);
+#elif PLATFORM_IOS
+	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("IOSAppID"), BuglyAppId, GGameIni);
+#endif
+
+	FString BuglyAppVersion, BuglyAppChannel;
+	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("BuglyAppVersion"), BuglyAppVersion, GGameIni);
+	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("BuglyAppChannel"), BuglyAppChannel, GGameIni);
+
+	FBuglyModule::Get().GetBugly()->OnStartup(BuglyAppId, BuglyAppVersion, BuglyAppChannel, false);
+}
 
 void UBuglyBlueprintLibrary::TestNativeCrash()
 {

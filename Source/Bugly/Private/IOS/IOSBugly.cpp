@@ -22,6 +22,8 @@
 	TSharedPtr<FGenericBuglyDelegate> CrashDelegate = FBuglyModule::Get().GetBugly()->GetCrashDelegate();
 	const FString Logs = CrashDelegate.IsValid() ? CrashDelegate->OnCrashNotify() : TEXT("");
 
+	UE_LOG(LogBugly, Error, TEXT("%s"), *Logs);
+
 	NSString* LogsOC = [NSString stringWithFString : Logs];
 	return LogsOC;
 }

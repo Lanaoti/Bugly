@@ -12,6 +12,9 @@ class BUGLY_API UBuglyBlueprintLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 	UFUNCTION(BlueprintCallable, Category = "Bugly")
+	static void Startup();
+
+	UFUNCTION(BlueprintCallable, Category = "Bugly")
 	static void TestNativeCrash();
 
 	UFUNCTION(BlueprintCallable, Category = "Bugly")

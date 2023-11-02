@@ -35,6 +35,8 @@ JNI_METHOD jstring Java_com_epicgames_ue4_GameActivity_nativeOnCrashNotify(JNIEn
 	TSharedPtr<FGenericBuglyDelegate> CrashDelegate = FBuglyModule::Get().GetBugly()->GetCrashDelegate();
 	const FString Logs = CrashDelegate.IsValid() ? CrashDelegate->OnCrashNotify() : TEXT("");
 
+	UE_LOG(LogBugly, Error, TEXT("%s"), *Logs);
+
 	jstring LogsJava = jenv->NewStringUTF(TCHAR_TO_UTF8(*Logs));
 
 	return LogsJava;

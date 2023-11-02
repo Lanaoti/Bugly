@@ -17,26 +17,13 @@ DEFINE_LOG_CATEGORY(LogBugly)
 
 void FBuglyModule::StartupModule()
 {
-	FString BuglyAppId;
-
 #if PLATFORM_ANDROID
-	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("AndroidAppID"), BuglyAppId, GGameIni);
 	Bugly = MakeShared<FAndroidBugly>();
 #elif PLATFORM_IOS
-	GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("IOSAppID"), BuglyAppId, GGameIni);
 	Bugly = MakeShared<FIOSBugly>();
 #else
 	Bugly = MakeShared<FGenericBugly>();
 #endif
-
-	if (Bugly.IsValid())
-	{
-		FString BuglyAppVersion, BuglyAppChannel;
-		GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("BuglyAppVersion"), BuglyAppVersion, GGameIni);
-		GConfig->GetString(TEXT("/Script/Bugly.BuglySettings"), TEXT("BuglyAppChannel"), BuglyAppChannel, GGameIni);
-
-		Bugly->OnStartup(BuglyAppId, BuglyAppVersion, BuglyAppChannel, false);
-	}
 }
 
 void FBuglyModule::ShutdownModule()
